@@ -25,9 +25,9 @@ def proof_of_work(last_proof):
     print("Searching for next proof")
     proof = 0
     #  TODO: Your code here
-    block_string = json.dumps(block, sort_keys=True)
     proof = 4000000
-    while valid_proof(block_string, proof) is False:
+    last_hash = hashlib.sha256(f'{last_proof}'.encode()).hexdigest()
+    while valid_proof(last_hash, proof) is False:
         if proof % 2 == 0:
             proof += 7
         else:
@@ -47,13 +47,12 @@ def valid_proof(last_hash, proof):
 
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
-
-    # TODO: Your code here!
-    guess = f'{block_string}{proof}'.encode()
-    guess_hash = hashlib.sha256(guess).hexdigest()
-    #size = len(guess_hash)
-    print(guess_hash[-6:])
-    if last_hash[:6] == guess_hash[-6:]
+    new_hash = hashlib.sha256(f'{proof}'.encode()).hexdigest()
+    if last_hash[:6] == new_hash[-6:]:
+        print(f'{last_hash[:6]} {new_hash[-6:]}')
+        return True
+    else:
+        return False
 
 
 if __name__ == '__main__':
