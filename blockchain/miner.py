@@ -32,8 +32,6 @@ def proof_of_work(last_proof):
             proof += 7
         else:
             proof += 5
-        
-    return proof
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
@@ -48,11 +46,7 @@ def valid_proof(last_hash, proof):
     IE:  last_hash: ...AE9123456, new hash 123456E88...
     """
     new_hash = hashlib.sha256(f'{proof}'.encode()).hexdigest()
-    if last_hash[:6] == new_hash[-6:]:
-        print(f'{last_hash[:6]} {new_hash[-6:]}')
-        return True
-    else:
-        return False
+    return last_hash[-6:] == new_hash[:6]
 
 
 if __name__ == '__main__':
