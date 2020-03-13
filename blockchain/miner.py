@@ -25,6 +25,15 @@ def proof_of_work(last_proof):
     print("Searching for next proof")
     proof = 0
     #  TODO: Your code here
+    block_string = json.dumps(block, sort_keys=True)
+    proof = 4000000
+    while valid_proof(block_string, proof) is False:
+        if proof % 2 == 0:
+            proof += 7
+        else:
+            proof += 5
+        
+    return proof
 
     print("Proof found: " + str(proof) + " in " + str(timer() - start))
     return proof
@@ -40,7 +49,11 @@ def valid_proof(last_hash, proof):
     """
 
     # TODO: Your code here!
-    pass
+    guess = f'{block_string}{proof}'.encode()
+    guess_hash = hashlib.sha256(guess).hexdigest()
+    #size = len(guess_hash)
+    print(guess_hash[-6:])
+    if last_hash[:6] == guess_hash[-6:]
 
 
 if __name__ == '__main__':
